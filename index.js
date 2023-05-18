@@ -38,11 +38,37 @@ async function run() {
         const result = await toysCollections.find(query).toArray();
         res.send(result)
     })
+    app.get('/toy/:id', async(req, res)=>{
+        const id = req.params.id;
+        const query = {_id: new ObjectId(id)};
+        const result = await toysCollections.findOne(query);
+        res.send(result);
+    })
     app.delete('/allToys/:id', async(req, res)=>{
         const id = req.params.id;
         const query = {_id: new ObjectId(id)};
         const result = await toysCollections.deleteOne(query);
         res.send(result);
+    })
+    app.put('/allToys/:id', async(req, res)=>{
+        const id = req.params.id;
+        const data = req.body;
+        const query = {_id: new ObjectId(id)};       
+        const option = {upsert: true};
+        const updatedToy ={
+            $set:{
+                price:data.price, 
+                description:data.description, 
+                quantity:data.quantity, 
+                name:data.name, 
+                rating:data.rating, 
+                category:data.category, 
+                photoURL:data.photoURL
+            }
+        }
+        const result = await toysCollections.updateOne(query,updatedToy,option);
+        res.send(result);
+
     })
 
     // Send a ping to confirm a successful connection
