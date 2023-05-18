@@ -31,12 +31,20 @@ async function run() {
         res.send(result)
     })
     app.get('/allToys', async(req, res)=>{
+        const value =  parseInt(req.query?.value);
+        console.log('valu',   value);
         let query = {};
         if(req.query?.email){
             query = {email: req.query.email}
         }
-        const result = await toysCollections.find(query).toArray();
+        if(req.query?.name){
+            query = {name: req.query.name}
+            console.log('name', query)
+        }
+        // const result = await toysCollections.find(query).sort({price: value}).limit(20).toArray();
+        const result = await toysCollections.find(query).limit(20).toArray();
         res.send(result)
+        // console.log(result)
     })
     app.get('/toy/:id', async(req, res)=>{
         const id = req.params.id;
@@ -67,6 +75,7 @@ async function run() {
             }
         }
         const result = await toysCollections.updateOne(query,updatedToy,option);
+        console.log(result)
         res.send(result);
 
     })
