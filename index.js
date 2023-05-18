@@ -31,8 +31,9 @@ async function run() {
         res.send(result)
     })
     app.get('/allToys', async(req, res)=>{
-        const value =  parseInt(req.query?.value);
-        console.log('valu',   value);
+         
+        // console.log('valu',   value);
+        
         let query = {};
         if(req.query?.email){
             query = {email: req.query.email}
@@ -41,8 +42,16 @@ async function run() {
             query = {name: req.query.name}
             console.log('name', query)
         }
-        // const result = await toysCollections.find(query).sort({price: value}).limit(20).toArray();
-        const result = await toysCollections.find(query).limit(20).toArray();
+        if(req.query?.category){
+            query = {category: req.query.category}
+            console.log(query)
+        }
+        const value =   req.query?.value;
+         const sortBy = {}
+         sortBy[value] = value;
+        //  console.log(sortBy)
+        const result = await toysCollections.find(query).sort({sortBy: -1}).limit(20).toArray();
+        // const result = await toysCollections.find(query).limit(20).toArray();
         res.send(result)
         // console.log(result)
     })
