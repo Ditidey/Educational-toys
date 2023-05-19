@@ -46,11 +46,11 @@ async function run() {
         }
         const price =  req.query?.price;   
         const order = req.query?.order == 'ascending'; 
-        console.log('order',order)     
+        // console.log('order',order)     
         
          const sortBy = {};
-         sortBy[price] = order ? -1 : 1;
-         console.log('obj sort',sortBy)
+         sortBy[price] = order ? 1 : -1;
+        //  console.log('obj sort',sortBy)
 
         const result = await toysCollections.find(query).sort(sortBy).limit(20).toArray();
         // const result = await toysCollections.find(query).limit(20).toArray();
