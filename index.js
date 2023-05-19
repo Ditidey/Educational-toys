@@ -45,8 +45,7 @@ async function run() {
             console.log(query)
         }
         const price =  req.query?.price;   
-        const order = req.query?.order == 'ascending'; 
-        // console.log('order',order)     
+        const order = req.query?.order == 'ascending';    
         
          const sortBy = {};
          sortBy[price] = order ? 1 : -1;
